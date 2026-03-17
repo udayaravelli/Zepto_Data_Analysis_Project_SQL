@@ -75,6 +75,44 @@ Compared in-stock vs out-of-stock product counts
 
 Detected products present multiple times, representing different SKUs
 
+```sql
+-- Count of rows
+SELECT COUNT(*) FROM zepto;
+
+-- Sample data
+SELECT * FROM zepto
+LIMIT 10;
+
+-- Null Values
+SELECT * FROM zepto
+WHERE name IS NULL
+   OR category IS NULL
+   OR mrp IS NULL
+   OR discountPercent IS NULL
+   OR discountedSellingPrice IS NULL
+   OR weightInGms IS NULL
+   OR availableQuantity IS NULL
+   OR outOfStock IS NULL
+   OR quantity IS NULL;
+
+-- Distinct Product Categories
+SELECT DISTINCT category
+FROM zepto
+ORDER BY category;
+
+-- Products In-stock vs Out of stock
+SELECT outOfStock, COUNT(sku_id)
+FROM zepto
+GROUP BY outOfStock;
+
+-- Products appearing multiple times (different SKUs)
+SELECT name, COUNT(sku_id)
+FROM zepto
+GROUP BY name
+HAVING COUNT(sku_id) > 1
+ORDER BY COUNT(sku_id) DESC;
+```
+
 4. 🧹 Data Cleaning
 Identified and removed rows where MRP or discounted selling price was zero
 
